@@ -5,7 +5,7 @@ import anime from 'animejs'
 const TEXT_SPEED = {
   typing: 50,
   deleting: 30,
-  pauseText: 2500
+  pauseText: 2000
 }
 
 const precisionWords = [
@@ -29,22 +29,24 @@ function useTypewriter(typingSpeed = TEXT_SPEED.typing, deletingSpeed = TEXT_SPE
 
   const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
 
-  const typeText = useCallback(async (newText: string) => {
+  const typeText = useCallback(async (newText: string, onDone?: () => void) => {
     setIsTyping(true)
-    for (let i = 0; i <= newText.length; i++) {
+    for (let i = 1; i <= newText.length; i++) {
       if (!isMounted.current) return
       await sleep(typingSpeed)
       textRef.current = newText.slice(0, i)
       setDisplayText(textRef.current)
     }
-      setIsTyping(false)
+
+    setIsTyping(false)
+    onDone?.()
   }, [typingSpeed])
 
   const deleteText = useCallback(async () => {
     setIsDeleting(true)
     for (let i = textRef.current.length; i >= 0; i--) {
       if (!isMounted.current) return
-      await sleep(deletingSpeed)
+      await sleep(TEXT_SPEED.deleting)
       textRef.current = textRef.current.slice(0, i)
       setDisplayText(textRef.current)
     }
@@ -59,8 +61,7 @@ export default function Hero() {
   const imageRef = useRef<HTMLImageElement>(null)
 
   const [showContent, setShowContent] = useState(false)
-  const [currentWord, setCurrentWord] = useState('Precision.')
-  const currentWordRef = useRef('Precision.') // ✅ FIX: ref biar gak stale
+  const precisionTimeline = useTypewriter()
 
   const [phase, setPhase] = useState<'overlay' | 'greeting' | 'title' | 'description' | 'location' | 'complete'>('overlay')
   const hasStartedLoop = useRef(false)
@@ -163,7 +164,9 @@ export default function Hero() {
 
   useEffect(() => {
     if (phase === 'title') {
-      titlePrefix.typeText('Crafting Digital Experiences with ')
+      titlePrefix.typeText('Crafting Digital Experiences with ', () => {
+        startPrecisionLoop()
+      })
     }
   }, [phase])
 
@@ -182,8 +185,8 @@ export default function Hero() {
   }, [phase])
 
   // ==================== PRECISION WORD LOOP ====================
-  useEffect(() => {
-    if (phase !== 'complete' || hasStartedLoop.current) return
+  const startPrecisionLoop = useCallback(() => {
+    if (hasStartedLoop.current) return
     hasStartedLoop.current = true
 
     let running = true
@@ -192,36 +195,26 @@ export default function Hero() {
     const loop = async () => {
       let index = 0
 
+      // 🔥 langsung type pertama TANPA delay & delete
+      await precisionTimeline.typeText(precisionWords[0])
+
       while (running) {
         await sleep(TEXT_SPEED.pauseText)
 
         const nextIndex = (index + 1) % precisionWords.length
         const next = precisionWords[nextIndex]
-        const old = currentWordRef.current
 
-        // Delete
-        for (let i = old.length; i >= 0; i--) {
-          await sleep(TEXT_SPEED.deleting)
-          const sliced = old.slice(0, i)
-          currentWordRef.current = sliced
-          setCurrentWord(sliced)
-        }
-
-        // Type
-        for (let i = 0; i <= next.length; i++) {
-          await sleep(TEXT_SPEED.typing)
-          const sliced = next.slice(0, i)
-          currentWordRef.current = sliced
-          setCurrentWord(sliced)
-        }
+        await precisionTimeline.deleteText()
+        await precisionTimeline.typeText(next)
 
         index = nextIndex
       }
     }
 
-    const timer = setTimeout(loop, 1000)
-    return () => { running = false; clearTimeout(timer) }
-  }, [phase])
+    loop()
+
+    return () => { running = false}
+  }, [])
 
   // ==================== MOTION PROPS ====================
   const fadeUp = (delay = 0) => ({
@@ -251,9 +244,12 @@ export default function Hero() {
                 {(titlePrefix.isTyping || titlePrefix.isDeleting) && (
                   <span className="inline-block w-0.75 h-10 md:h-14 bg-black ml-0.5 animate-pulse align-middle" />
                 )}
-                {titlePrefix.displayText.length > 0 && (
+                {!titlePrefix.isTyping && titlePrefix.displayText.length > 0 && (
                   <u className="decoration-[#000000] decoration-4 underline-offset-4 inline-block">
-                    {currentWord}
+                    {precisionTimeline.displayText}
+                    {precisionTimeline.isTyping && (
+                      <span className='inline-block w-0.75 h-10 md:h-14 bg-black ml-0.5 animate-pulse align-middle'></span>
+                    )}
                   </u>
                 )}
               </motion.h2>
