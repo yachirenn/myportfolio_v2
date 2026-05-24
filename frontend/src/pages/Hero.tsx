@@ -9,14 +9,14 @@ const TEXT_SPEED = {
 }
 
 const precisionWords = [
-  'Precision.',
-  'Purpose.',
   'Passion.',
-  'Perfection.',
-  'Power.',
-  'Potential.',
-  'Progress.',
-  'Presence.',
+  'Creativity.',
+  'Innovation.',
+  'Excellence.',
+  'Purpose.',
+  'Functional.',
+  'Craft.',
+  'Kawaii.',
 ]
 
 function useTypewriter(typingSpeed = TEXT_SPEED.typing, deletingSpeed = TEXT_SPEED.deleting) {
@@ -59,6 +59,7 @@ function useTypewriter(typingSpeed = TEXT_SPEED.typing, deletingSpeed = TEXT_SPE
 export default function Hero() {
   const overlayRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
+  const [showButton, setShowButton] = useState(false)
 
   const [showContent, setShowContent] = useState(false)
   const precisionTimeline = useTypewriter()
@@ -164,7 +165,7 @@ export default function Hero() {
 
   useEffect(() => {
     if (phase === 'title') {
-      titlePrefix.typeText('Crafting Digital Experiences with ', () => {
+      titlePrefix.typeText('Building Digital Experiences with ', () => {
         startPrecisionLoop()
       })
     }
@@ -173,7 +174,12 @@ export default function Hero() {
   useEffect(() => {
     if (phase === 'description') {
       description.typeText(
-        "A multi-disciplinary designer and developer specialized with a passion for building high-performance visual and engaging digital products. Merging creativity with technical expertise to deliver exceptional user experiences."
+        "An IT enthusiast and web developer passionate about crafting high-performance digital products. I blend technical expertise with creative design, inspired by Japanese culture, anime aesthetics, and the rhythm of music — from Akihabara's electric streets to the stars of Honkai: Star Rail.",
+        () => {
+          setTimeout(() => {
+            setShowButton(true)
+          }, 300);
+        }
       )
     }
   }, [phase])
@@ -240,39 +246,53 @@ export default function Hero() {
               </motion.h1>
 
               <motion.h2 {...fadeUp(0.3)} className="font-bold text-4xl md:text-6xl leading-tight mt-4 text-black wrap-break-word">
-                {titlePrefix.displayText}
-                {(titlePrefix.isTyping || titlePrefix.isDeleting) && (
-                  <span className="inline-block w-0.75 h-10 md:h-14 bg-black ml-0.5 animate-pulse align-middle" />
-                )}
+                <span className='block mt-4 text-5xl md:text-7xl'>
+                  {titlePrefix.displayText}
+                  {(titlePrefix.isTyping || titlePrefix.isDeleting) && (
+                    <span className="inline-block w-0.75 h-10 md:h-14 bg-black ml-0.5 animate-pulse align-middle" />
+                  )}
+                </span>
+
                 {!titlePrefix.isTyping && titlePrefix.displayText.length > 0 && (
-                  <u className="decoration-[#000000] decoration-4 underline-offset-4 inline-block">
-                    {precisionTimeline.displayText}
-                    {precisionTimeline.isTyping && (
-                      <span className='inline-block w-0.75 h-10 md:h-14 bg-black ml-0.5 animate-pulse align-middle'></span>
-                    )}
-                  </u>
+                  <span className="block mt-2">
+                    <u className="decoration-[#000000] decoration-4 underline-offset-4 inline-block">
+                      {precisionTimeline.displayText}
+                      {precisionTimeline.isTyping && (
+                        <span className='inline-block w-0.75 h-10 md:h-14 bg-black ml-0.5 animate-pulse align-middle'></span>
+                      )}
+                    </u>
+                  </span>
                 )}
               </motion.h2>
 
               <div className="flex flex-col space-y-4">
                 <div className="space-y-6">
-                  <p className="desc-text text-[#5c4a3a]/80 max-w-lg leading-relaxed">
+                  <motion.p {...fadeUp(0.5)} className="desc-text text-[#5c4a3a]/80 max-w-lg leading-relaxed">
                     {description.displayText}
                     {description.isTyping && (
                       <span className="inline-block w-0.5 h-4 bg-[#5c4a3a]/60 ml-0.5 animate-pulse align-middle" />
                     )}
-                  </p>
+                  </motion.p>
 
-                  <motion.div {...fadeUp(1.0)} className="flex gap-4">
-                    <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                      className="bg-black text-white px-6 py-3.5 hover:bg-white hover:text-black transition-colors duration-200 font-medium border border-black cursor-pointer">
-                      View My Projects
-                    </motion.button>
-                    <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                      className="bg-transparent text-black px-6 py-3.5 hover:bg-black/5 transition-colors duration-200 border border-black/20 font-medium cursor-pointer">
-                      Download Resume
-                    </motion.button>
-                  </motion.div>
+                  <AnimatePresence>
+                    {showButton && (
+                      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                        transition={{
+                          duration: 0.5,
+                          ease: 'easeIn'
+                        }}
+                        className="flex gap-4"
+                      >
+                        <motion.button whileTap={{ scale: 0.97 }} className="bg-black text-white px-6 py-3.5 hover:bg-white hover:text-black transition-colors duration-200 font-medium border border-black cursor-pointer">
+                          View My Projects
+                        </motion.button>
+
+                        <motion.button whileTap={{ scale: 0.97 }} className="bg-transparent text-black px-6 py-3.5 hover:bg-black/5 transition-colors duration-200 border border-black/20 font-medium cursor-pointer">
+                          Download Resume
+                        </motion.button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 <div className="location-block absolute top-0 right-0 bg-transparent p-1 flex items-center gap-3">
