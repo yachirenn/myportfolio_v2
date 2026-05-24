@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import { useNavigate } from 'react-router-dom'
 import anime from 'animejs'
 
 const TEXT_SPEED = {
@@ -66,11 +67,27 @@ export default function Hero() {
 
   const [phase, setPhase] = useState<'overlay' | 'greeting' | 'title' | 'description' | 'location' | 'complete'>('overlay')
   const hasStartedLoop = useRef(false)
+  const navigate = useNavigate()
 
   const greeting = useTypewriter()
   const titlePrefix = useTypewriter()
   const description = useTypewriter(TEXT_SPEED.typing / 2, TEXT_SPEED.deleting / 2)
   const locationTW = useTypewriter()
+
+  // Function Download Resume
+  const handleDownloadResume = () => {
+    const link = document.createElement('a')
+    link.href = '/assets/CV_by_yachirenn.pdf'
+    link.download = 'yachirenn_Resume_download.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  // Function to navigate to projects
+  const handleViewProject = () => {
+    navigate('/projects')
+  }
 
   // ==================== OVERLAY + IMAGE FLOAT ====================
   useEffect(() => {
@@ -283,11 +300,11 @@ export default function Hero() {
                         }}
                         className="flex gap-4"
                       >
-                        <motion.button whileTap={{ scale: 0.97 }} className="bg-black text-white px-6 py-3.5 hover:bg-white hover:text-black transition-colors duration-200 font-medium border border-black cursor-pointer">
+                        <motion.button whileTap={{ scale: 0.97 }} onClick={handleViewProject} className="bg-black text-white px-6 py-3.5 hover:bg-white hover:text-black transition-colors duration-200 font-medium border border-black cursor-pointer">
                           View My Projects
                         </motion.button>
 
-                        <motion.button whileTap={{ scale: 0.97 }} className="bg-transparent text-black px-6 py-3.5 hover:bg-black/5 transition-colors duration-200 border border-black/20 font-medium cursor-pointer">
+                        <motion.button whileTap={{ scale: 0.97 }} onClick={handleDownloadResume} className="bg-transparent text-black px-6 py-3.5 hover:bg-black/5 transition-colors duration-200 border border-black/20 font-medium cursor-pointer">
                           Download Resume
                         </motion.button>
                       </motion.div>
