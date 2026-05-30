@@ -1,6 +1,6 @@
 import Header from './components/partials/header'
 import Hero from './pages/Hero'
-import About from './pages/About'
+import AboutPage from './pages/About'
 import ClickSpark from './components/CustomCursor'
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
 
       <main className="w-full h-auto">
         <Hero />
-        <About />
+        <AboutPage />
       </main>
     </ClickSpark>
   )
