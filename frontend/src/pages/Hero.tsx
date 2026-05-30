@@ -304,7 +304,7 @@ export default function Hero() {
                           View My Projects
                         </motion.button>
 
-                        <motion.button whileTap={{ scale: 0.97 }} onClick={handleDownloadResume} className="bg-transparent text-black px-6 py-3.5 hover:bg-black/5 transition-colors duration-200 border border-black/20 font-medium cursor-pointer">
+                        <motion.button whileTap={{ scale: 0.97 }} onClick={handleDownloadResume} className="bg-transparent backdrop-blur-xs text-black px-6 py-3.5 hover:bg-black/5 transition-colors duration-200 border border-black/20 font-medium cursor-pointer">
                           Download Resume
                         </motion.button>
                       </motion.div>
