@@ -218,7 +218,7 @@ const TextPressure = ({
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center top',
           margin: 0,
-          textAlign: 'center',
+          textAlign: 'left',
           userSelect: 'none',
           whiteSpace: 'nowrap',
           fontWeight: 100,

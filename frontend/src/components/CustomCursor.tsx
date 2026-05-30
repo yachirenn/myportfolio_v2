@@ -154,29 +154,12 @@ const ClickSpark = ({
     sparksRef.current.push(...newSparks)
   }
 
-  // ==================== RENDER ====================
+  // ==================== RENDER (CLEAN FROM INLINE STYLES) ====================
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-      }}
-      onClick={handleClick}
-    >
+    <div onClick={handleClick} className="relative w-full h-full">
       <canvas
         ref={canvasRef}
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'block',
-          userSelect: 'none',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          pointerEvents: 'none',
-          zIndex: 50,
-        }}
+        className="absolute top-0 left-0 block w-full h-full select-none pointer-events-none z-50"
       />
       {children}
     </div>
