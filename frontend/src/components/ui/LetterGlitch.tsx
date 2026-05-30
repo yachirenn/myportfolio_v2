@@ -1,4 +1,4 @@
-import { useRef, useEffect, type CSSProperties } from 'react'
+import { useRef, useEffect } from 'react'
 
 interface LetterGlitchProps {
   glitchColors?: string[]
@@ -24,13 +24,15 @@ interface RGB {
 }
 
 const LetterGlitch = ({
-  glitchColors = ['#2b4539', '#61dca3', '#61b3dc'],
+  // Disesuaikan dengan tema Japanese Minimalist Anda (#2c1810 dominan gelap)
+  glitchColors = ['#2c1810', '#4a3225', '#a89078', '#f5e6d3'],
   className = '',
   glitchSpeed = 50,
   centerVignette = false,
   outerVignette = true,
   smooth = true,
-  characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789',
+  // Karakter default ditambahkan Katakana jepang agar lebih sesuai tema
+  characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789コノハナサクヤヒメウルワシ',
 }: LetterGlitchProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number | null>(null)
@@ -105,8 +107,7 @@ const LetterGlitch = ({
     canvas.width = rect.width * dpr
     canvas.height = rect.height * dpr
 
-    canvas.style.width = `${rect.width}px`
-    canvas.style.height = `${rect.height}px`
+    // Membuang manipulasi style.width/height inline, digantikan oleh class Tailwind block w-full h-full
 
     if (context.current) {
       context.current.setTransform(dpr, 0, 0, dpr, 0, 0)
@@ -220,45 +221,19 @@ const LetterGlitch = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [glitchSpeed, smooth])
 
-  const containerStyle: CSSProperties = {
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#000000',
-    overflow: 'hidden',
-  }
-
-  const canvasStyle: CSSProperties = {
-    display: 'block',
-    width: '100%',
-    height: '100%',
-  }
-
-  const outerVignetteStyle: CSSProperties = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    pointerEvents: 'none',
-    background: 'radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 100%)',
-  }
-
-  const centerVignetteStyle: CSSProperties = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    pointerEvents: 'none',
-    background: 'radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%)',
-  }
-
   return (
-    <div style={containerStyle} className={className}>
-      <canvas ref={canvasRef} style={canvasStyle} />
-      {outerVignette && <div style={outerVignetteStyle} />}
-      {centerVignette && <div style={centerVignetteStyle} />}
+    <div className={`relative w-full h-full bg-[#F6F7ED] overflow-hidden ${className}`}>
+      <canvas ref={canvasRef} className="block w-full h-full" />
+      
+      {/* Outer Vignette menggunakan utility radial gradient Tailwind */}
+      {outerVignette && (
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,rgba(246,247,237,0)_60%,rgba(246,247,237,1)_100%)]" />
+      )}
+      
+      {/* Center Vignette menggunakan utility radial gradient Tailwind */}
+      {centerVignette && (
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,rgba(44,24,16,0.15)_0%,rgba(246,247,237,0)_60%)]" />
+      )}
     </div>
   )
 }
