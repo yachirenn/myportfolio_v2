@@ -41,8 +41,8 @@ export default function AboutPage() {
   const [quoteJpDone, setQuoteJpDone] = useState(false)
   const [showQuote, setShowQuote] = useState(false)
 
-  const paragraph1 = useTypewriter(30)
-  const paragraph2 = useTypewriter(30)
+  const paragraph1 = useTypewriter(20)
+  const paragraph2 = useTypewriter(20)
 
   // Typewriter Sequence
   useEffect(() => {
