@@ -41,8 +41,8 @@ export default function AboutPage() {
   const [quoteJpDone, setQuoteJpDone] = useState(false)
   const [showQuote, setShowQuote] = useState(false)
 
-  const paragraph1 = useTypewriter(20)
-  const paragraph2 = useTypewriter(20)
+  const paragraph1 = useTypewriter(15)
+  const paragraph2 = useTypewriter(15)
 
   // Typewriter Sequence
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function AboutPage() {
 
     const sequence = async () => {
       await paragraph1.textType(
-        "I'm a Web Developer and Creative Content Creator based in Indonesia. I dedicate myself to building digital spaces that are not just functional, but possess a distinct soul. My creative direction is inspired by Japanese culture, anime, and music.",
+        "I'm a Web Development enthusiast based in Indonesia who enjoys building digital experiences that are both functional and visually engaging. I like turning ideas into reality through clean and structured code, while also exploring my interests in Japanese culture, anime, manga, and music, which often influence my sense of design and creativity.",
         () => setParagraphDone(prev => { 
           const next = [...prev];
           next[0] = true; 
@@ -106,7 +106,7 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="w-full lg:w-auto flex justify-center"
+          className="w-full lg:w-auto flex items-center mt-12"
         >
           <ProfileCard
             name="Rendy Sulistyawan"
