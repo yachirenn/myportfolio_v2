@@ -33,9 +33,13 @@ function useTypewriter(typingSpeed = TEXT_SPEED.isTyping) {
 }
 
 export default function AboutPage() {
-
   const [showContent, setShowContent] = useState(false)
   const [paragraphDone, setParagraphDone] = useState([false, false, false])
+
+  const quoteJP = useTypewriter(60)
+  const romajiJP = useTypewriter(40)
+  const [quoteJpDone, setQuoteJpDone] = useState(false)
+  const [showQuote, setShowQuote] = useState(false)
 
   const paragraph1 = useTypewriter(30)
   const paragraph2 = useTypewriter(30)
@@ -64,6 +68,23 @@ export default function AboutPage() {
 
       await paragraph2.textType(
         "Currently seeking Freelance, Intership, and Collaboration opportunities. Let's connect and build something meaningful together!",
+        () => setParagraphDone(prev => {
+          const next = [...prev];
+          next[2] = true;
+          return next
+        })
+      )
+
+      setShowQuote(true)
+      await new Promise(r => setTimeout(r, 500))
+      await quoteJP.textType(
+        '「もしも別の形で出会えていたなら、君に“好きだ”って言えたのかな。」',
+        () => setQuoteJpDone(true)
+      )
+
+      await new Promise(r => setTimeout(r, 300))
+      await romajiJP.textType(
+        'Moshimo betsu no katachi de deaete ita nara, kimi ni "suki da" tte ieta no kana.',
         () => setParagraphDone(prev => {
           const next = [...prev];
           next[2] = true;
@@ -159,7 +180,65 @@ export default function AboutPage() {
             </motion.p>
           )}
 
-          <div className="w-full flex py-4 shadow-2xl rounded-2xl h-auto">Card qutoe</div>
+          {/* ===== QUOTE BANNER ===== */}
+          {showQuote && (
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+              className="relative flex shadow-2xl rounded-2xl h-55 overflow-hidden group"
+            >
+              <motion.img 
+                initial={{ scale: 1.2 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: 'easeOut' }}
+                src="/assets/banner_quote.webp" 
+                alt="this is us !>< if you even care" 
+                className='w-full h-full object-cover' 
+              />
+
+              <div className="absolute inset-0 flex flex-col max-w-lg items-start justify-center px-8 md:px-12 py-8">
+                <motion.span
+                  initial={{ opacity: 0, rotate: -20 }}
+                  whileInView={{ opacity: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  className="text-4xl text-black/80"
+                >
+                  ❝
+                </motion.span>
+
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3 }}
+                  className="text-lg text-black font-medium leading-relaxed"
+                >
+                  {quoteJP.displayText}
+                  {quoteJP.isTyping && (
+                    <span className="inline-block w-0.5 bg-white/70 ml-0.5 animate-pulse align-middle" />
+                  )}
+                </motion.p>
+
+                {quoteJpDone && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-sm md:text-base text-black/60 italic"
+                  >
+                    {romajiJP.displayText}
+                    {romajiJP.isTyping && (
+                      <span className="inline-block w-0.5 h-4 bg-white/40 ml-0.5 animate-pulse align-middle" />
+                    )}
+                  </motion.p>
+                )}
+              </div>
+            </motion.div>
+          )}
 
           {/* Status badges */}
           {paragraphDone[2] && (
