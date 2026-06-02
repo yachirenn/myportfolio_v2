@@ -248,12 +248,44 @@ export default function AboutPage() {
               transition={{ duration: 0.5 }}
               className="flex flex-wrap gap-2 w-fit"
             >
-              <span className="px-3 py-1.5 bg-[#2c1810] text-[#f5e6d3] text-xs font-medium rounded-full">
-                🇯🇵 Freelance Web Dev
-              </span>
-              <span className="px-3 py-1.5 bg-black/5 text-black text-xs font-medium rounded-full border border-black/10">
-                🎌 Japan Enthusiast
-              </span>
+              {/* Status badges */}
+              <motion.div
+                whileHover={{ y: -2, scale:1.02 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2 px-4 py-2 bg-[#2C1810] text-[#F5E6D3] rounded-xl shadow-md cursor-default"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-globe-check-icon lucide-globe-check">
+                  <path d="m15 6 2 2 4-4"/><path d="M2 12h20A10 10 0 1 1 12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 4-10"/>
+                </svg>
+                <div className="flex flex-col leading-tight">
+                  <span className='text-[10px] uppercase tracking-wider text-[#C4A97D] font-medium'>Status</span>
+                  <span className='text-sm font-semibold'>Freelance Web Developers</span>
+                </div>
+              </motion.div>
+              <motion.div
+                whileHover={{ y: -2, scale:1.02 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2 px-4 py-2 bg-[#2C1810] text-[#F5E6D3] rounded-xl shadow-md cursor-default"
+              >
+                <span className='text-base'>🇯🇵</span>
+                <div className="flex flex-col leading-tight">
+                  <span className='text-[10px] uppercase tracking-wider text-[#C4A97D] font-medium'>Interested in?</span>
+                  <span className='text-sm font-semibold'>Japan Enthusiast</span>
+                </div>
+              </motion.div>
+              <motion.div
+                whileHover={{ y: -2, scale:1.02 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2 px-4 py-2 bg-[#2C1810] text-[#F5E6D3] rounded-xl shadow-md cursor-default"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-map-pin-check-inside-icon lucide-map-pin-check-inside">
+                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><path d="m9 10 2 2 4-4"/>
+                </svg>
+                <div className="flex flex-col leading-tight">
+                  <span className='text-[10px] uppercase tracking-wider text-[#C4A97D] font-medium'>Location</span>
+                  <span className='text-sm font-semibold'>Yogyakarta</span>
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </motion.div>
