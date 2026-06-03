@@ -91,7 +91,6 @@ export default function Hero() {
 
   // ==================== OVERLAY + IMAGE FLOAT ====================
   useEffect(() => {
-    // ✅ FIX: cuma set element yang TIDAK di-handle Motion
     requestAnimationFrame(() => {
       anime.set(['.desc-text', '.location-block', '.scroll-indicator'], {
         opacity: 0,
