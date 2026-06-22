@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { motion } from 'motion/react'
-import TextPressure from '../components/ui/TextPressure'
 import ProfileCard from '../components/ProfileCard'
 
 const TEXT_SPEED = {
@@ -97,198 +96,39 @@ export default function AboutPage() {
   }, [showContent])
 
   return (
-    <section id="about" className="min-h-screen bg-[#F6F7ED] px-6 sm:px-16 md:px-32 pt-32 pb-20">
-      <div className="flex flex-col lg:flex-row gap-10 items-start">
-        
-        {/* ===== KIRI: PROFILE CARD ===== */}
-        <motion.div
-          initial={{ opacity: 0, x: -80, scale: 0.95 }}
-          whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="w-full lg:w-auto flex items-center mt-12"
-        >
-          <ProfileCard
-            name="Rendy Sulistyawan"
-            title="Web Developers"
-            handle="yachirennn"
-            status="Online"
-            contactText="Contact Me"
-            avatarUrl="/assets/guwelagi.webp"
-            showUserInfo={true}
-            enableTilt={true}
-            enableMobileTilt={false}
-            onContactClick={() => console.log('Contact clicked')}
-            behindGlowColor="#919191"
-            iconUrl="/assets/iconShineJP.webp"
-          />
-        </motion.div>
+    <section id="about" className="relative min-h-screen px-6 sm:px-16 md:px-32 pt-32 pb-20 overflow-hidden">
+      
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/assets/waguri_rintaro.jpg" 
+          alt="Background" 
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
 
-        {/* ===== KANAN: TEXT ===== */}
-        <motion.div
-          initial={{ opacity: 0, x: 70, scale: 0.95 }}
-          whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: 'easeOut' }} 
-          className="flex flex-col gap-6 flex-1"
-        >
-          
-          {/* TextPressure */}
-          <div className="relative w-full h-20 md:h-25">
-            <TextPressure
-              text="Konnichiwaaaa!"
-              fontFamily="Compressa VF"
-              fontUrl="https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2"
-              flex={false}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={true}
-              textColor="#2c1810"
-              strokeColor="#ff0000"
-              minFontSize={18}
-            />
-          </div>
+      {/* ===== GRADIENT OVERLAY (transisi mulus ke #F6F7ED) ===== */}
+      <div className="absolute inset-0 z-1 bg-linear-to-b from-[#F6F7ED]/95 via-[#F6F7ED]/60 to-[#F6F7ED]" />
+      
+      {/* Alternative: gradient dari atas & bawah */}
+      <div className="absolute inset-0 z-1 bg-linear-to-b from-[#F6F7ED] via-transparent via-45% to-[#F6F7ED]" />
 
-          {/* Paragraphs - animasi dengan delay stagger manual */}
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-base md:text-lg text-[#5c4a3a] leading-relaxed"
-          >
-            {paragraph1.displayText}
-            {paragraph1.isTyping && (
-              <span className='inline-block w-0.5 h-4.5 bg-[#5C4A3A]/60 ml-0.5 animate-pulse align-middle' />
-            )}
-          </motion.p>
+      <div className="relative z-10 flex flex-col lg:flex-row gap-10 items-start">
+        <ProfileCard
+          name="Rendy Sulistyawan"
+          title="Web Developers"
+          handle="yachirennn"
+          status="Online"
+          contactText="Contact Me"
+          avatarUrl="/assets/guwelagi.webp"
+          showUserInfo={true}
+          enableTilt={true}
+          enableMobileTilt={false}
+          onContactClick={() => console.log('Contact clicked')}
+          behindGlowColor="#919191"
+          iconUrl="/assets/iconShineJP.webp"
+        />
 
-          {paragraphDone[0] && (
-            <motion.p
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-base text-[#5c4a3a] leading-relaxed"
-            >
-              {paragraph2.displayText}
-              {paragraph2.isTyping && (
-                <span className='inline-block w-0.5 h-4.5 bg-[#5C4A3A]/60 ml-0.5 animate-pulse align-middle' />
-              )}
-            </motion.p>
-          )}
-
-          {/* ===== QUOTE BANNER ===== */}
-          {showQuote && (
-            <motion.div
-              initial={{ opacity: 0, y: 40, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
-              className="relative flex shadow-2xl rounded-2xl h-55 overflow-hidden group"
-            >
-              <motion.img 
-                initial={{ scale: 1.2 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, ease: 'easeOut' }}
-                src="/assets/banner_quote.webp" 
-                alt="this is us !>< if you even care" 
-                className='w-full h-full object-cover' 
-              />
-
-              <div className="absolute inset-0 flex flex-col max-w-lg items-start justify-center px-8 md:px-12 py-8">
-                <motion.span
-                  initial={{ opacity: 0, rotate: -20 }}
-                  whileInView={{ opacity: 1, rotate: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  className="text-4xl text-black/80"
-                >
-                  ❝
-                </motion.span>
-
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3 }}
-                  className="text-lg text-black font-medium leading-relaxed"
-                >
-                  {quoteJP.displayText}
-                  {quoteJP.isTyping && (
-                    <span className="inline-block w-0.5 bg-white/70 ml-0.5 animate-pulse align-middle" />
-                  )}
-                </motion.p>
-
-                {quoteJpDone && (
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-sm md:text-base text-black/60 italic"
-                  >
-                    {romajiJP.displayText}
-                    {romajiJP.isTyping && (
-                      <span className="inline-block w-0.5 h-4 bg-white/40 ml-0.5 animate-pulse align-middle" />
-                    )}
-                  </motion.p>
-                )}
-              </div>
-            </motion.div>
-          )}
-
-          {/* Status badges */}
-          {paragraphDone[2] && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-wrap gap-2 w-fit"
-            >
-              {/* Status badges */}
-              <motion.div
-                whileHover={{ y: -2, scale:1.02 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center gap-2 px-4 py-2 bg-[#2C1810] text-[#F5E6D3] rounded-xl shadow-md cursor-default"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-globe-check-icon lucide-globe-check">
-                  <path d="m15 6 2 2 4-4"/><path d="M2 12h20A10 10 0 1 1 12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 4-10"/>
-                </svg>
-                <div className="flex flex-col leading-tight">
-                  <span className='text-[10px] uppercase tracking-wider text-[#C4A97D] font-medium'>Status</span>
-                  <span className='text-sm font-semibold'>Freelance Web Developers</span>
-                </div>
-              </motion.div>
-              <motion.div
-                whileHover={{ y: -2, scale:1.02 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center gap-2 px-4 py-2 bg-[#2C1810] text-[#F5E6D3] rounded-xl shadow-md cursor-default"
-              >
-                <span className='text-base'>🇯🇵</span>
-                <div className="flex flex-col leading-tight">
-                  <span className='text-[10px] uppercase tracking-wider text-[#C4A97D] font-medium'>Interested in?</span>
-                  <span className='text-sm font-semibold'>Japan Enthusiast</span>
-                </div>
-              </motion.div>
-              <motion.div
-                whileHover={{ y: -2, scale:1.02 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center gap-2 px-4 py-2 bg-[#2C1810] text-[#F5E6D3] rounded-xl shadow-md cursor-default"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-map-pin-check-inside-icon lucide-map-pin-check-inside">
-                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><path d="m9 10 2 2 4-4"/>
-                </svg>
-                <div className="flex flex-col leading-tight">
-                  <span className='text-[10px] uppercase tracking-wider text-[#C4A97D] font-medium'>Location</span>
-                  <span className='text-sm font-semibold'>Yogyakarta</span>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </motion.div>
+        {/* Text content di sini */}
       </div>
     </section>
   )

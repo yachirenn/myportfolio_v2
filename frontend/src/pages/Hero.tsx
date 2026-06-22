@@ -341,7 +341,7 @@ export default function Hero() {
       {showContent && (
         <motion.a initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 4, duration: 0.5 }}
           href="#about" className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20">
-          <div className="w-6 h-9.5 border-2 border-black/40 rounded-[20px] flex pl-2 justify-center pt-2">
+          <div className="w-6 h-9.5 border-2 border-black/40 rounded-[20px] flex justify-center pt-2">
             <div className="w-0.75 h-2 bg-black/50 rounded-sm animate-bounce" />
           </div>
           <span className="text-xs text-black/50 uppercase tracking-widest">Scroll</span>
