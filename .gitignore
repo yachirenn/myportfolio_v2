@@ -1,0 +1,10 @@
+# Tooling & editor local state
+.codegraph/
+.claude/
+*.local
+
+# Dependencies & builds
+node_modules/
+dist/
+logs/
+*.log
