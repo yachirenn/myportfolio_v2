@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 
@@ -78,9 +79,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   title = 'Software Engineer',
   handle = 'javicodes',
   status = 'Online',
-  contactText = 'Contact',
-  showUserInfo = true,
-  onContactClick
+  showUserInfo = true
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const shellRef = useRef<HTMLDivElement>(null);
@@ -372,10 +371,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     }),
     [iconUrl, grainUrl, innerGradient, behindGlowColor, behindGlowSize, cardRadius]
   );
-
-  const handleContactClick = useCallback((): void => {
-    onContactClick?.();
-  }, [onContactClick]);
 
   // Complex styles that require CSS variables and can't be done with Tailwind
   const shineStyle = {

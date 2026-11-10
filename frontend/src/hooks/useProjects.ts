@@ -25,20 +25,43 @@ export const useProjects = () => {
   }, [])
 
   const addProject = async (data: { title: string; description: string; anime: string }) => {
-    try {
-      const response = await api.createProject(data)
-      if (response.success && response.data) {
-        setProjects(prev => [...prev, response.data!])
-        return response.data
-      }
-    } catch (err) {
-      throw err
+    const response = await api.createProject(data)
+    if (response.success && response.data) {
+      const newProject = response.data
+      setProjects(prev => [...prev, newProject])
+      return newProject
     }
   }
 
   useEffect(() => {
-    fetchProjects()
-  }, [fetchProjects])
+    let ignore = false
+
+    const loadInitialProjects = async () => {
+      try {
+        const response = await api.getProjects()
+        if (ignore) return
+        if (response.success && response.data) {
+          setProjects(response.data)
+        } else {
+          setError('Failed to load projects')
+        }
+      } catch (err) {
+        if (!ignore) {
+          setError(err instanceof Error ? err.message : 'An error occurred')
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false)
+        }
+      }
+    }
+
+    void loadInitialProjects()
+
+    return () => {
+      ignore = true
+    }
+  }, [])
 
   return { projects, loading, error, addProject, refetch: fetchProjects }
 }
