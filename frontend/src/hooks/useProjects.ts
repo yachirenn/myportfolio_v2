@@ -24,15 +24,6 @@ export const useProjects = () => {
     }
   }, [])
 
-  const addProject = async (data: { title: string; description: string; anime: string }) => {
-    const response = await api.createProject(data)
-    if (response.success && response.data) {
-      const newProject = response.data
-      setProjects(prev => [...prev, newProject])
-      return newProject
-    }
-  }
-
   useEffect(() => {
     let ignore = false
 
@@ -63,5 +54,5 @@ export const useProjects = () => {
     }
   }, [])
 
-  return { projects, loading, error, addProject, refetch: fetchProjects }
+  return { projects, loading, error, refetch: fetchProjects }
 }

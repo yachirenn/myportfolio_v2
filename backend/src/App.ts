@@ -5,7 +5,7 @@ import { projectRoutes } from './routes/project.route'
 export const app = new Elysia()
   .use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
   }))

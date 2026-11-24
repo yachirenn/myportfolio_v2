@@ -15,10 +15,3 @@ export interface ApiResponse<T> {
   error?: string
   timestamp: string
 }
-
-export interface CreateProjectDTO {
-  title: string
-  description: string
-  anime: string
-  status?: 'ongoing' | 'completed' | 'planned'
-}

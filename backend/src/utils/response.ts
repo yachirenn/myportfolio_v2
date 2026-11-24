@@ -3,7 +3,7 @@ export interface ApiResponse<T> {
   data?: T
   message?: string
   error?: string
-  timeStamp?: string
+  timestamp: string
 }
 
 export function createSuccessResponse<T>(data: T, message?: string): ApiResponse<T> {
@@ -11,7 +11,7 @@ export function createSuccessResponse<T>(data: T, message?: string): ApiResponse
     success: true,
     data,
     message,
-    timeStamp: new Date().toISOString(),
+    timestamp: new Date().toISOString(),
   }
 }
 
@@ -20,6 +20,6 @@ export function createErrorResponse(error: string, message?: string): ApiRespons
     success: false,
     error,
     message,
-    timeStamp: new Date().toISOString(),
+    timestamp: new Date().toISOString(),
   }
 }

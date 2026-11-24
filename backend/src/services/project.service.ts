@@ -1,4 +1,4 @@
-import { Project, CreateProjectDTO } from '../models/project.model'
+import { Project } from '../models/project.model'
 
 // Dummy data with anime theme
 const projects: Project[] = [
@@ -38,20 +38,5 @@ export class ProjectService {
 
   getProjectById(id: number): Project | undefined {
     return projects.find(project => project.id === id)
-  }
-
-  createProject(data: CreateProjectDTO): Project {
-    const newProject: Project = {
-      id: projects.length + 1,
-      title: data.title,
-      description: data.description,
-      imageUrl: data.imageUrl || `https://picsum.photos/seed/${data.title.toLowerCase().replace(/\s+/g, '')}/400/300`,
-      anime: data.anime,
-      status: data.status || 'planned',
-      createdAt: new Date().toISOString().split('T')[0]
-    }
-    
-    projects.push(newProject)
-    return newProject
   }
 }
