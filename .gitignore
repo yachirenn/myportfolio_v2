@@ -1,12 +1,26 @@
+# Secrets & environment
+.env
+.env.*
+!.env.example
+*.local
+
 # Tooling & editor local state
 .codegraph/
 .claude/
-*.local
+.vscode/
+.idea/
+.DS_Store
 
 # Dependencies & builds
 node_modules/
 dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Logs
 logs/
 *.log
 
-PRD-Portfolio-v1.2.md
+# Private product docs
+PRD-*.md
