@@ -2,11 +2,11 @@
 
 > A modern fullstack portfolio application built with cutting-edge technologies for high performance and clean architecture.
 
-[![React](https://img.shields.io/badge/React-18+-61DAFB?style=flat&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
-[![Elysia.js](https://img.shields.io/badge/Elysia.js-Latest-FFE24D?style=flat)](https://elysiajs.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Elysia.js](https://img.shields.io/badge/Elysia.js-1.4-FFE24D?style=flat)](https://elysiajs.com/)
 [![Bun](https://img.shields.io/badge/Bun-Runtime-F471B5?style=flat&logo=bun)](https://bun.sh/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3+-06B6D4?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
 
 ---
 
@@ -19,14 +19,13 @@
 - [Development](#-development)
 - [API Endpoints](#-api-endpoints)
 - [Screenshots](#-screenshots)
-- [Future Improvements](#-future-improvements)
 - [Author](#-author)
 
 ---
 
 ## 🌟 Overview
 
-**MyPortfolio V2** is a modern fullstack portfolio application designed with performance and maintainability in mind. The project separates frontend and backend into independent applications, each optimized for their specific purposes.
+**MyPortfolio V2** is a fullstack portfolio application. The frontend is a React + Vite single page. The backend is an Elysia API on Bun. Product direction for a later version is in [PRD-Portfolio-v1.2.md](PRD-Portfolio-v1.2.md). This README describes the app that is in the repository today.
 
 ### Key Highlights
 
@@ -35,22 +34,22 @@
 📱 **Responsive Design**: Modern UI with React and TailwindCSS  
 🔌 **RESTful API**: Standardized API responses with proper error handling  
 🎯 **Type-Safe**: Full TypeScript support for enhanced developer experience  
-⚡ **Production-Ready**: Battle-tested patterns and best practices
+📖 **Read-only API**: The project list lives in memory. The API does not accept writes.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **React 18+** - UI library for building interactive interfaces
-- **TypeScript** - Static typing for safer code
-- **Vite** - Next-generation build tool with instant HMR
-- **TailwindCSS** - Utility-first CSS framework for rapid UI development
+- **React 19** - UI library
+- **TypeScript 6** - Static typing
+- **Vite 8** - Dev server and production build
+- **Tailwind CSS 4** - Utility styling
 
 ### Backend
-- **Elysia.js** - Fast, friendly Bun web framework
-- **TypeScript** - Type-safe backend development
-- **Bun** - All-in-one runtime (runtime, package manager, bundler)
+- **Elysia.js 1.4** - HTTP framework
+- **TypeScript** - Types for the API
+- **Bun** - Runtime and package manager. Entry file: `src/server.ts`
 
 ### DevTools & Utilities
 - **Bun Package Manager** - Fast and efficient dependency management
@@ -60,57 +59,50 @@
 
 ## 📁 Project Structure
 
-\`\`\`
-MyPortfolio-V2/
-├── frontend/                    # React + Vite + TailwindCSS
+```
+myportfolio_v2/
+├── frontend/                         # React 19 + Vite 8 + Tailwind CSS 4
 │   ├── src/
-│   │   ├── components/         # Reusable React components
-│   │   ├── pages/             # Page components
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── services/          # API client services
-│   │   ├── types/             # TypeScript type definitions
-│   │   ├── styles/            # Global styles and Tailwind config
-│   │   ├── App.tsx            # Main App component
-│   │   └── main.tsx           # Entry point
-│   ├── public/                # Static assets
-│   ├── index.html             # HTML template
-│   ├── package.json           # Frontend dependencies
-│   ├── tsconfig.json          # TypeScript configuration
-│   └── vite.config.ts         # Vite configuration
+│   │   ├── components/               # Header, cursor, profile card
+│   │   ├── pages/                    # Hero, About, Skills, Projects, Connect
+│   │   ├── hooks/                    # useProjects
+│   │   ├── services/                 # API client
+│   │   ├── types/                    # Frontend response types
+│   │   ├── data/                     # Static skills list
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.ts
 │
-├── backend/                     # Elysia.js + Bun
+├── backend/                          # Elysia 1.4 + Bun
 │   ├── src/
-│   │   ├── routes/            # API route definitions
-│   │   ├── controllers/       # Request handlers (business logic)
-│   │   ├── services/          # Business logic layer
-│   │   ├── types/             # TypeScript types and interfaces
-│   │   ├── middleware/        # Custom middleware
-│   │   ├── utils/             # Helper functions and utilities
-│   │   ├── constants/         # Application constants
-│   │   └── index.ts           # Server entry point
-│   ├── package.json           # Backend dependencies
-│   ├── tsconfig.json          # TypeScript configuration
-│   ├── bunfig.toml            # Bun configuration
-│   └── .env.example           # Environment variables template
+│   │   ├── routes/                   # HTTP routes
+│   │   ├── controllers/              # Request handlers
+│   │   ├── services/                 # In-memory project list
+│   │   ├── models/                   # Project type
+│   │   ├── utils/                    # Response helpers
+│   │   ├── App.ts                    # Elysia app
+│   │   └── server.ts                 # Process entry, port 3001
+│   ├── package.json
+│   └── tsconfig.json
 │
-├── .gitignore                 # Git ignore rules
-├── README.md                  # This file
-└── LICENSE                    # License file
-
-\`\`\`
+├── PRD-Portfolio-v1.2.md             # Later product direction
+└── README.md
+```
 
 ### Folder Descriptions
 
 | Folder | Purpose |
 |--------|---------|
-| **frontend/** | React application with Vite and TailwindCSS for building the user interface |
-| **backend/** | Elysia.js server handling API requests with clean architecture pattern |
-| **src/routes/** | Define API endpoints and HTTP methods |
-| **src/controllers/** | Handle incoming requests and responses |
-| **src/services/** | Core business logic and data processing |
-| **src/types/** | Shared TypeScript interfaces and types |
-| **src/middleware/** | Authentication, logging, error handling middleware |
-| **src/utils/** | Reusable utility functions and helpers |
+| **frontend/** | React 19 application. Sections are in-page anchors, not separate routes. |
+| **backend/** | Elysia 1.4 server. Default port is 3001. Entry file is `src/server.ts`. |
+| **backend/src/routes/** | `GET /api/projects` and `GET /api/projects/:id` |
+| **backend/src/controllers/** | Turn service results into response bodies |
+| **backend/src/services/** | In-memory project list and lookups |
+| **backend/src/models/** | `Project` interface |
+| **backend/src/utils/** | Response helpers. The time field is `timestamp`. |
+| **frontend/src/data/** | Skills shown without calling the API |
 
 ---
 
@@ -123,26 +115,26 @@ Ensure you have the following installed:
 
 ### Clone the Repository
 
-\`\`\`bash
+```bash
 git clone https://github.com/yachirenn/MyPortfolio-V2.git
 cd MyPortfolio-V2
-\`\`\`
+```
 
 ### Install Dependencies
 
 #### Backend Setup
 
-\`\`\`bash
+```bash
 cd backend
 bun install
-\`\`\`
+```
 
 #### Frontend Setup
 
-\`\`\`bash
+```bash
 cd ../frontend
 bun install
-\`\`\`
+```
 
 ---
 
@@ -150,51 +142,68 @@ bun install
 
 ### Running the Backend
 
-\`\`\`bash
+```bash
 cd backend
 bun run dev
-\`\`\`
+```
 
-The backend will start at \`http://localhost:3000\` (or your configured port)
+The backend listens on `http://localhost:3001` unless `PORT` is set. The frontend calls `http://localhost:3001/api`.
 
 ### Running the Frontend
 
-\`\`\`bash
+```bash
 cd frontend
 bun run dev
-\`\`\`
+```
 
-The frontend will start at \`http://localhost:5173\` (Vite default)
+The frontend will start at `http://localhost:5173` (Vite default)
 
 ### Running Both Concurrently
 
 **From the root directory:**
 
-\`\`\`bash
+```bash
 # Terminal 1 - Backend
 cd backend && bun run dev
 
 # Terminal 2 - Frontend
 cd frontend && bun run dev
-\`\`\`
+```
 
 ### Build for Production
 
 #### Backend
 
-\`\`\`bash
+There is no build script. Start the TypeScript entry directly:
+
+```bash
 cd backend
-bun run build
 bun run start
-\`\`\`
+```
+
+`bun run dev` watches `src/server.ts`.
 
 #### Frontend
 
-\`\`\`bash
+```bash
 cd frontend
 bun run build
-\`\`\`
+```
 
+`bun run build` runs `tsc -b` and then `vite build`.
+
+## 🔌 API Endpoints
+
+Base URL: `http://localhost:3001`
+
+| Method | Path | Success | Failure |
+|--------|------|---------|---------|
+| GET | `/` | 200, API index | |
+| GET | `/health` | 200, `{ status: "ok" }` | |
+| GET | `/api/projects` | 200, project array | |
+| GET | `/api/projects/:id` | 200, one project | 400 if the id is not a positive integer. 404 if that id does not exist. |
+
+Project responses include `timestamp` as an ISO string. `POST /api/projects` is not registered. The list is read from memory and resets when the process stops.
 
 ## 📸 Screenshots
 
